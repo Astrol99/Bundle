@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 import json
 
-TOKEN = "NTM2MDY3MTIxMTkzNjgwOTEx.DzjhhQ.H09VJec-L9JQg1unvw7K31hZC8c"
+
+TOKEN = ""
 
 cogs = []
 
