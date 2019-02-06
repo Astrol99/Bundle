@@ -2,6 +2,10 @@ import discord
 from discord.ext import commands
 import json
 import sys
+import colorama
+from colorama import Fore, Style
+
+colorama.init(convert=True, autoreset=True)
 
 with open("token.txt") as f:
 	char0 = f.readlines()
@@ -9,29 +13,30 @@ with open("token.txt") as f:
 	f.close()
 
 if TOKEN[0] != "N":
-	print("[!] Unable to launch - No Token\nExiting...")
+	print(f"{Fore.RED}[!] Unable to launch - No Token\nExiting...")
 	sys.exit(0)
 
-cogs = []
+cogs = [
+	"cogs.bundle_core"
+]
 dev = [354693078495264778]
 
 bot = commands.Bot(command_prefix="./")
 
 @bot.event
 async def on_ready():
-	msg = f"""
-__________________________________
+	msg = """
+{}__________________________________
 |/////////////////////////////////|
-|       Welcome To Bundle!        |
+{}|       Welcome To Bundle!        |
 |/////////////////////////////////|
-|_________________________________|
-~ A discord cogs package manager :)
-
-[!] Status: Online!
-[/] Signed in as: {bot.user} 
-[/] Servers Connected: {len(bot.guilds)}
-"""
+***********************************
+""".format(Fore.BLUE,Fore.LIGHTYELLOW_EX)
 	print(msg)
+	print("~ A discord cogs package manager :)\n")
+	print(f"[!] Status: {Fore.GREEN}Online!")
+	print(f"[/] Signed in as: {Fore.YELLOW}{bot.user}") 
+	print(f"[/] Servers Connected: {Fore.MAGENTA}{len(bot.guilds)}\n")
 
 @bot.command()
 async def shutdown(ctx):
@@ -42,15 +47,15 @@ async def shutdown(ctx):
 
 if __name__ == "__main__":
 	if not cogs:
-		print("[>] No cogs available, skipping cog initialization...")
+		print(f"{Fore.RED}[>] No cogs available, skipping cog initialization...")
 	else:
-		print("[~] Initializing cogs...")
+		print(f"{Style.DIM}[~] Initializing cogs...")
 		for cog in cogs:
 			try:
 				bot.load_extension(cog)
-				print("[*] Successfully loaded {cog}")
+				print(f"{Fore.GREEN}[*] Successfully loaded {cog}")
 			except Exception as e:
-				print(f"[*] Unable to load {cog}: {e}")
-		print("[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!")
+				print(f"{Fore.RED}[*] Unable to load {Fore.WHITE}{cog}: {e}")
+		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!")
 
 bot.run(TOKEN)
