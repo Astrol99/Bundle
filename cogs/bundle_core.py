@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+import os
 
 """
 DO NOT DELETE THIS FILE AS THIS IS THE MAIN FILE

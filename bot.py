@@ -4,6 +4,9 @@ import json
 import sys
 import colorama
 from colorama import Fore, Style
+import os
+from os import listdir
+from os.path import isfile, join
 
 colorama.init(convert=True, autoreset=True)
 
@@ -16,9 +19,14 @@ if TOKEN[0] != "N":
 	print(f"{Fore.RED}[!] Unable to launch - No Token\nExiting...")
 	sys.exit(0)
 
-cogs = [
-	"cogs.bundle_core"
-]
+cogs = []
+
+mypath = os.path.dirname(os.path.abspath(__file__)) + "\cogs"
+cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+for file in cogpath:
+	cogs.append("cogs."+cogpath)
+
 dev = [354693078495264778]
 
 bot = commands.Bot(command_prefix="./")
