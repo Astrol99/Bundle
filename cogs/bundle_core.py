@@ -19,7 +19,7 @@ class Core:
         self.cogs = []
 
         # Finds current path and finds all files in cogs directory
-        mypath = str(os.path.dirname(os.path.abspath(__file__))) + "\cogs"
+        mypath = str(os.path.dirname(os.path.abspath(__file__)))
         cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
         # Add them to cogs list 
