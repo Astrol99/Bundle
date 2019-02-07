@@ -28,6 +28,13 @@ class Core:
             self.cogs.append(file)
     
     @commands.command()
+    async def list_cog(self, ctx):
+        list_ = ""
+        for cog in self.cogs:
+            list_ += "{}\n".format(cog)
+        return await ctx.send(f"```css\n{list_}\n```")
+
+    @commands.command()
     async def reload(self, ctx, cog:str=None):
         if cog == None or cog == " ":
             return await ctx.send("Invalid cog name!\n```\nUsage: ./reload cogs.<cog name>\n```")
