@@ -17,7 +17,7 @@ with open("token.txt") as f:
 	TOKEN = char0[0]
 	f.close()
 
-# Checks if TOKEN is valid, if not, exits out
+# Checks if TOKEN is valid, if not, exits
 if TOKEN[0] != "N":
 	print(f"{Fore.RED}[!] Unable to launch - No Token\nExiting...")
 	sys.exit(0)
