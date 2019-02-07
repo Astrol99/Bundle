@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import json
 import sys
 import colorama
 from colorama import Fore, Style
@@ -21,11 +20,12 @@ if TOKEN[0] != "N":
 
 cogs = []
 
-mypath = os.path.dirname(os.path.abspath(__file__)) + "\cogs"
+mypath = str(os.path.dirname(os.path.abspath(__file__))) + "\cogs"
 cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
 for file in cogpath:
-	cogs.append("cogs."+cogpath)
+	file = "cogs.{}".format(file).replace(".py", "")
+	cogs.append(file)
 
 dev = [354693078495264778]
 
@@ -61,9 +61,9 @@ if __name__ == "__main__":
 		for cog in cogs:
 			try:
 				bot.load_extension(cog)
-				print(f"{Fore.GREEN}[*] Successfully loaded {cog}")
+				print(f"{Fore.GREEN}[*] Successfully loaded {Fore.YELLOW}{cog}")
 			except Exception as e:
-				print(f"{Fore.RED}[*] Unable to load {Fore.WHITE}{cog}: {e}")
+				print(f"{Fore.RED}[*] Unable to load {Fore.YELLOW}{cog}{Fore.WHITE}: {e}")
 		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!")
 
 bot.run(TOKEN)
