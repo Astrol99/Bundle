@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 import os
+from os import listdir
+from os.path import isfile, join
 
 """
 DO NOT DELETE THIS FILE AS THIS IS THE MAIN FILE
@@ -10,6 +12,20 @@ RELOAD, UNLOAD, LOAD PACKAGES
 class Core:
     def __init__(self, bot):
         self.bot = bot
+
+        self.cog_search()
+
+    def cog_search(self):
+        self.cogs = []
+
+        # Finds current path and finds all files in cogs directory
+        mypath = str(os.path.dirname(os.path.abspath(__file__))) + "\cogs"
+        cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+
+        # Add them to cogs list 
+        for file in cogpath:
+            file = "cogs.{}".format(file).replace(".py", "")
+            self.cogs.append(file)
     
     @commands.command()
     async def reload(self, ctx, cog:str=None):
