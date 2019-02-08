@@ -55,18 +55,7 @@ async def on_ready():
 	print(f"[!] Status: {Fore.GREEN}Online!")
 	print(f"[/] Signed in as: {Fore.YELLOW}{bot.user}") 
 	print(f"[/] Servers Connected: {Fore.MAGENTA}{len(bot.guilds)}\n")
-
-# Command to shutdown bot cleanly
-@bot.command()
-async def shutdown(ctx):
-	# Checks if users ID is in dev list
-	if ctx.author.id not in dev:
-		return await ctx.send("Hol'up, you ain't a dev")
-	await ctx.send("Shutting down...")
-	await bot.logout()
-
-# Loads all cogs in cog list when launched
-if __name__ == "__main__":
+	# Starts initializing cogs
 	if not cogs:
 		print(f"{Fore.RED}[>] No cogs available, skipping cog initialization...")
 	else:
@@ -78,5 +67,14 @@ if __name__ == "__main__":
 			except Exception as e:
 				print(f"{Fore.RED}[*] Unable to load {Fore.YELLOW}{cog}{Fore.WHITE}: {e}")
 		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!")
+
+# Command to shutdown bot cleanly
+@bot.command()
+async def shutdown(ctx):
+	# Checks if users ID is in dev list
+	if ctx.author.id not in dev:
+		return await ctx.send("Hol'up, you ain't a dev")
+	await ctx.send("Shutting down...")
+	await bot.logout()
 
 bot.run(TOKEN)
