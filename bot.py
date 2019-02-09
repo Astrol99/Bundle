@@ -66,7 +66,7 @@ async def on_ready():
 				print(f"{Fore.GREEN}[*] Successfully loaded {Fore.YELLOW}{cog}")
 			except Exception as e:
 				print(f"{Fore.RED}[*] Unable to load {Fore.YELLOW}{cog}{Fore.WHITE}: {e}")
-		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!")
+		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!\n")
 
 # Command to shutdown bot cleanly
 @bot.command()
