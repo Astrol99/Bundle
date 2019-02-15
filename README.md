@@ -6,6 +6,14 @@ A discord bot that let's you install external cogs through a single command
 ## Installation
 **WARNING**: Only tested on Windows 10
 
+#### 0. Install necessary packages and programs
+- git 
+website to install git: https://git-scm.com/
+
+- discord 1.0.0a rewrite
+```
+pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
+```
 #### 1. Install files
 ```
 git clone https://github.com/Astrol99/Bundle.git
