@@ -8,9 +8,11 @@ A discord bot that let's you install external cogs through a single command
 
 #### 0. Install necessary packages and programs
 - Python3 (recommended to be 3.6.6)
-https://www.python.org/downloads/release/python-366/
-- git 
-website to install git: https://git-scm.com/
+
+[Python3.6](https://www.python.org/downloads/release/python-366/)
+- git
+
+[Official git website](https://git-scm.com/)
 
 - discord 1.0.0a rewrite
 ```
