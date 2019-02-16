@@ -14,7 +14,7 @@ colorama.init(convert=True, autoreset=True)
 # Opens token.txt to extract TOKEN
 with open("token.txt") as f:
 	char0 = f.readlines()
-	TOKEN = char0[0]
+	TOKEN = char0[0].strip()
 	f.close()
 
 # Checks if TOKEN is valid, if not, exits
@@ -25,7 +25,7 @@ if TOKEN[0] != "N":
 cogs = []
 
 # Finds current path and finds all files in cogs directory
-mypath = str(os.path.dirname(os.path.abspath(__file__))) + "\cogs"
+mypath = str(os.path.dirname(os.path.abspath(__file__))) + "/cogs"
 cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
 # Add them to cogs list 
@@ -51,6 +51,7 @@ async def on_ready():
 """.format(Fore.BLUE,Fore.LIGHTYELLOW_EX)
 	print(msg)
 	print("~ A discord cogs package manager :)\n")
+	print(f"[!] Running version: {discord.__version__}")
 	# Pretty messy but gets the job done
 	print(f"[!] Status: {Fore.GREEN}Online!")
 	print(f"[/] Signed in as: {Fore.YELLOW}{bot.user}") 
