@@ -4,7 +4,7 @@ A discord bot that let's you install external cogs through a single command
 ![Example of bundle bot](https://github.com/Astrol99/Bundle/blob/master/resources/Capture1.PNG)
 
 ## Installation
-**WARNING**: Only tested on Windows 10
+**WARNING**: Some parts tested on Windows 10 and others on macOS Mojave since I work on both machines
 
 #### 0. Install necessary packages and programs
 - git 
