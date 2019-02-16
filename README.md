@@ -7,6 +7,8 @@ A discord bot that let's you install external cogs through a single command
 **WARNING**: Some parts tested on Windows 10 and others on macOS Mojave since I work on both machines
 
 #### 0. Install necessary packages and programs
+- Python3 (recommended to be 3.6.6)
+https://www.python.org/downloads/release/python-366/
 - git 
 website to install git: https://git-scm.com/
 
