@@ -31,7 +31,7 @@ class Core:
     
     # Command to list all cogs
     @commands.command()
-    async def list_cog(self, ctx):
+    async def list_cogs(self, ctx):
         # Search cogs again
         self.cog_search()
         # Initiate list string
