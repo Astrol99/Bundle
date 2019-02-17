@@ -18,6 +18,12 @@ class Package:
     def __init__(self, bot):
         self.bot = bot
 
+        self.important_cogs = [
+            "cogs.bundle_core",
+            "cogs.package",
+            "cogs.error_handle"
+        ]
+
     @commands.command()
     async def install(self, ctx, url:str=None):
         # Checks if user input is right so it doesn't install wrong files
@@ -52,11 +58,13 @@ class Package:
     
     @commands.command()
     async def uninstall(self, ctx, cog:str=None):
-        error_msg = "Unvalid cog name! - Usage: ./uninstall cogs.<cogname>"
+        error_msg = "Invalid cog name! - Usage: ./uninstall cogs.<cogname>"
         if cog == " " or cog == None:
             return await ctx.send(error_msg)
         elif cog[:3] != "cog":
             return await ctx.send(error_msg)
+        elif cog in self.important_cogs:
+            return await ctx.send("Unable to delete main files!")
         try:
             # Why does line 57 exist? Just to keep consistancy with "cogs." to not confuse end-user
             cog = cog.replace("cogs.", "").replace(" ", "")
