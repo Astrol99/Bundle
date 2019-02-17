@@ -39,7 +39,10 @@ class Package:
             os.system(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
             # Deletes the repo so it only takes the main cog file
-            os.system(f"cd cogs;rm -r -rf {self.name_repo}")
+            if os.name == "nt":
+                os.system(f"cd cogs;rmdir -r -rf {self.name_repo}")
+            else:
+                os.system(f"cd cogs;rm -r -rf {self.name_repo}")
             await ctx.send("Automatically loading cog...")
             # Auto reloads cog right after it's installed
             self.bot.load_extension(f"cogs.{self.name_repo}")
@@ -62,7 +65,10 @@ class Package:
             self.bot.unload_extension(f"cogs.{cog}")
             # Goes into directory and deletes the cog
             await ctx.send("Uninstalling cog...")
-            os.system(f"cd cogs; rm {cog}.py")
+            if os.name == "nt":
+                os.system(f"cd cogs; del {cog}.py")
+            else:
+                os.system(f"cd cogs; rm {cog}.py")
             await ctx.send(f"Successfully uninstalled {cog}")
         except Exception as e:
             return await ctx.send(f"Error uninstalling cog!```{e}```")
