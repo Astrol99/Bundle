@@ -2,10 +2,13 @@ import discord
 from discord.ext import commands
 import sys
 import colorama
-from colorama import Fore, Style
+from colorama import Fore as F
+from colorama import Style
 import os
 from os import listdir
 from os.path import isfile, join
+
+auto_update = False
 
 # To allow windows users to see colors
 colorama.init(convert=True, autoreset=True)
@@ -19,7 +22,7 @@ with open("token.txt") as f:
 
 # Checks if TOKEN is valid, if not, exits
 if TOKEN[0] != "N":
-	print(f"{Fore.RED}[!] Unable to launch - No Token\nExiting...")
+	print(f"{F.RED}[!] Unable to launch - No Token\nExiting...")
 	sys.exit(0)
 
 cogs = []
@@ -48,26 +51,40 @@ async def on_ready():
 {}|       Welcome To Bundle!        |
 |/////////////////////////////////|
 ***********************************
-""".format(Fore.BLUE,Fore.LIGHTYELLOW_EX)
+""".format(F.BLUE,F.LIGHTYELLOW_EX)
 	print(msg)
 	print("~ A discord cogs package manager :)\n")
 	print(f"[!] Running version: {discord.__version__}")
 	# Pretty messy but gets the job done
-	print(f"[!] Status: {Fore.GREEN}Online!")
-	print(f"[/] Signed in as: {Fore.YELLOW}{bot.user}") 
-	print(f"[/] Servers Connected: {Fore.MAGENTA}{len(bot.guilds)}\n")
+	print(f"[!] Status: {F.GREEN}Online!")
+	print(f"[/] Signed in as: {F.YELLOW}{bot.user}") 
+	print(f"[/] Servers Connected: {F.MAGENTA}{len(bot.guilds)}\n")
 	# Starts initializing cogs
 	if not cogs:
-		print(f"{Fore.RED}[>] No cogs available, skipping cog initialization...")
+		print(f"{F.RED}[>] No cogs available, skipping cog initialization...")
 	else:
 		print(f"{Style.DIM}[~] Initializing cogs...")
 		for cog in cogs:
 			try:
 				bot.load_extension(cog)
-				print(f"{Fore.GREEN}[*] Successfully loaded {Fore.YELLOW}{cog}")
+				print(f"{F.GREEN}[*] Successfully loaded {F.YELLOW}{cog}")
 			except Exception as e:
-				print(f"{Fore.RED}[*] Unable to load {Fore.YELLOW}{cog}{Fore.WHITE}: {e}")
+				print(f"{F.RED}[*] Unable to load {F.YELLOW}{cog}{F.WHITE}: {e}")
 		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!\n")
+
+# On launch, auto-updates
+if __name__ == "__main__":
+	if auto_update == True:
+		print(f"{F.GREEN}[*] Auto updating..")
+		try:
+			os.system("git pull")
+		except Exception as e:
+			print(f"{F.RED}Unable to update -> {e}")
+		print(f"{F.GREEN}[/] Done!")
+	else:
+		print(f"{F.RED}[!] Auto-update is currently off...")
+		print(f"{F.MAGENTA}[>] Skipping auto-update...")
+		print(f"[/] If you would like to enable auto-update, please change the auto-update variable to True")
 
 # Command to shutdown bot cleanly
 @bot.command()
