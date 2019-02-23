@@ -26,6 +26,7 @@ class Package:
             "cogs.error_handle"
         ]
 
+
     @commands.command()
     @has_permissions(administrator=True) # Checks if the user is an admin in that server
     async def install(self, ctx, url:str=None):
@@ -45,11 +46,19 @@ class Package:
             await ctx.send("Cloned repository cog...")
             await ctx.send("Trying to find cog file and moving it...")
             # Goes into the cloned repo then moves the main cog file into cog/ directory
-            os.system(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
+            if os.name == "nt":
+                os.system(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
+            else:
+                os.system(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
             # Deletes the repo so it only takes the main cog file
-            if os.name == "nt":
-                os.system(f"cd cogs;rmdir -r -rf {self.name_repo}")
+            if os.name == "nt":            
+                # Finds current path and finds all files in cogs directory
+                self.mypath = str(os.path.dirname(os.path.abspath(__file__))) + f"\{self.name_repo}"
+                self.cogpath = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))]
+                for item in self.cogpath:
+                    os.system(f"cd cogs/{self.name_repo} && del {item}")
+                os.system(f"cd cogs/ && rmdir /Q /S {self.name_repo}")
             else:
                 os.system(f"cd cogs;rm -r -rf {self.name_repo}")
             await ctx.send("Automatically loading cog...")

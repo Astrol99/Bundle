@@ -117,7 +117,7 @@ if __name__ == "__main__":
 		print(f"{F.GREEN}[/] Done!")
 	else:
 		print(f"{F.RED}[!] Auto-update is currently off...")
-		print(f"{F.MAGENTA}[>] Skipping auto-update...")
+		print("[>] Skipping auto-update...")
 		print(f"[/] If you would like to enable auto-update, please change the auto-update variable to True")
 
 # Command to shutdown bot cleanly
