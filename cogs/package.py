@@ -87,7 +87,7 @@ class Package:
             # Goes into directory and deletes the cog
             await ctx.send("Uninstalling cog...")
             if os.name == "nt":
-                os.system(f"cd cogs; del {cog}.py")
+                os.system(f"cd cogs && del {cog}.py")
             else:
                 os.system(f"cd cogs; rm {cog}.py")
             await ctx.send(f"Successfully uninstalled {cog}")
