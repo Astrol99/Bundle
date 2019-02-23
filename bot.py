@@ -1,13 +1,45 @@
-import discord
-from discord.ext import commands
 import sys
-import colorama
+import os
+try: # Checks if discord is installed on end-users machine
+	import discord
+except ImportError:
+	print("[!] You don't have discord installed!")
+	msg = "[/] Would you like to install discord 1.0.0a now?(Y/n): "
+	install_rewrite = input(msg)
+	if install_rewrite.lower() == "y":
+		print("[*] Preparing to install...")
+		os.system("pip3 install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]") # Does a pip installation through command line
+		print("\n[!] Finished! ~ Please launch the bot again. Exiting...")
+		sys.exit(0) 
+	# Just exits if the user says no
+	elif install_rewrite.lower() == "n":
+		print("[!] Exiting...")
+		sys.exit(0)
+	else:
+		print("[*] Invalid answer - it has to be 'y' or 'n' ~ Exiting...")
+		sys.exit(0)
+# This portion is to check if it has the right version
+version = discord.__version__
+if version != "1.0.0a":
+	print("[!] You have the wrong discord.py version! It has to be 1.0.0a ~ Exiting...")
+	sys.exit(0)
+
+from discord.ext import commands
+
+try:
+	import colorama
+except ImportError:
+	# Too lazy to repeat the whole process just like importing discord ^ :p
+	print("[!] You don't have colorama installed!")
+	print("[/] Please do 'pip3 install colorama' in order to have color! (Might not work in bash) Exiting...")
+	sys.exit(0)
 from colorama import Fore as F
 from colorama import Style
-import os
 from os import listdir
 from os.path import isfile, join
 
+# Change to True if you would like to auto-update
+# NOTE: It might break your bot if I pushed a bug or made a mistake :P
 auto_update = False
 
 # To allow windows users to see colors
