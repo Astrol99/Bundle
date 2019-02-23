@@ -25,6 +25,8 @@ if version != "1.0.0a":
 	sys.exit(0)
 
 from discord.ext import commands
+from discord import Member
+from discord.ext.commands import has_permissions, MissingPermissions
 
 try:
 	import colorama
@@ -120,11 +122,16 @@ if __name__ == "__main__":
 
 # Command to shutdown bot cleanly
 @bot.command()
+# Checks if user is an admin in server
+@has_permissions(administrator=True) # Only shown to users with admin perms
 async def shutdown(ctx):
-	# Checks if users ID is in dev list
-	if ctx.author.id not in dev:
-		return await ctx.send("Hol'up, you ain't a dev")
 	await ctx.send("Shutting down...")
 	await bot.logout()
+
+@shutdown.error
+async def shutdown_error(error, ctx):
+	if isinstance(error, MissingPermissions):
+		msg = "Sorry {}, you don't have admin privilages to install packages!".format(ctx.message.author) # Main message sented to user that executed command
+		await ctx.send(msg)
 
 bot.run(TOKEN)

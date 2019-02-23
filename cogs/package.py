@@ -1,5 +1,7 @@
 import discord
+from discord import Member
 from discord.ext import commands
+from discord.ext.commands import has_permissions, MissingPermissions
 import os
 from os import listdir
 from os.path import isfile, join
@@ -25,6 +27,7 @@ class Package:
         ]
 
     @commands.command()
+    @has_permissions(administrator=True) # Checks if the user is an admin in that server
     async def install(self, ctx, url:str=None):
         # Checks if user input is right so it doesn't install wrong files
         if url == "" or url == " " or url == None:
@@ -57,6 +60,7 @@ class Package:
             return await ctx.send(f"Error installing cog...please contact the developer for help! Details: ```{e}```")
     
     @commands.command()
+    @has_permissions(administrator=True)
     async def uninstall(self, ctx, cog:str=None):
         error_msg = "Invalid cog name! - Usage: ./uninstall cogs.<cogname>"
         if cog == " " or cog == None:
@@ -80,6 +84,19 @@ class Package:
             await ctx.send(f"Successfully uninstalled {cog}")
         except Exception as e:
             return await ctx.send(f"Error uninstalling cog!```{e}```")
+    
+    # These functions are executed if the user that attempted to use install command isn't a admin
+    @install.error
+    async def install_error(self, error, ctx):
+        if isinstance(error, MissingPermissions):
+            msg = "Sorry {}, you don't have admin privilages to install packages!".format(ctx.message.author) # Main message sented to user that executed command
+            await ctx.send(msg)
+    
+    @uninstall.error
+    async def uninstall_error(self, error, ctx):
+        if isinstance(error, MissingPermissions):
+            msg = "Sorry {}, you don't have admin privilages to uninstall packages!".format(ctx.message.author)
+            await ctx.send(msg)
 
 def setup(bot):
     bot.add_cog(Package(bot))

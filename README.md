@@ -32,7 +32,10 @@ That's it!
 ~~Unless you get errors~~
 
 ## Usage
+
+**NOTE**: The install and uninstall commands are hidden and cannot be used from users that don't have admin permissions in your server in order to protect abuse and spam.
 ### Installing other cogs
+
 In order to install other cogs, you must use a git repo where the repo name and cog file name are the same.
 Usage:
 ```
