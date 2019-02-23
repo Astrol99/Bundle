@@ -27,6 +27,35 @@ Make a .txt file named "token" and insert your bot token on the first line.
 #### 3. Run bot 
 ```
 python bot.py
-````
+```
 That's it!
 ~~Unless you get errors~~
+
+## Usage
+### Installing other cogs
+In order to install other cogs, you must use a git repo where the repo name and cog file name are the same.
+Usage:
+```
+./install <github repository link>
+```
+Example:
+In discord, when your bot is online,
+```
+./install https://github.com/Astrol99/Slanted.git
+```
+And then the bot will automatically reload it for you and will be ready to use!
+### Uninstalling cogs
+You can easily name the cogs by doing:
+```
+./list_cogs
+```
+and it will show a list of all cogs in the cog folder.
+All cogs are named: "cogs.<cog_name>"
+Usage:
+```
+./uninstall cogs.<cog_name>
+```
+You will need this to uninstall cogs. For example:
+```
+./uninstall cogs.test
+```
