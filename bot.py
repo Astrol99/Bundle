@@ -1,3 +1,5 @@
+# Main repo: https://github.com/Astrol99/Bundle
+
 import sys
 import os
 try: # Checks if discord is installed on end-users machine
@@ -105,6 +107,7 @@ async def on_ready():
 			except Exception as e:
 				print(f"{F.RED}[*] Unable to load {F.YELLOW}{cog}{F.WHITE}: {e}")
 		print(f"[~] Finished loading cogs!\n[/] Switched to monitoring mode...have a nice day!\n")
+		print("===========================================================================================================\n")
 
 # On launch, auto-updates
 if __name__ == "__main__":
@@ -125,6 +128,7 @@ if __name__ == "__main__":
 # Checks if user is an admin in server
 @has_permissions(administrator=True) # Only shown to users with admin perms
 async def shutdown(ctx):
+	print("[!] Initiating shutdown!")
 	await ctx.send("Shutting down...")
 	await bot.logout()
 
