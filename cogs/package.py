@@ -20,12 +20,17 @@ class Package:
     def __init__(self, bot):
         self.bot = bot
 
+        # Make sure user doesn't uninstall main packagess since it will break the bot
         self.important_cogs = [
             "cogs.bundle_core",
             "cogs.package",
             "cogs.error_handle"
         ]
-
+    
+    def cmd_run(self, command):
+        if " " in command:
+            command = command.split(" ")
+        subprocess.run(command, shell=True, stdin=subprocess.PIPE, stderr=subprocess.STDOUT, stdout=subprocess.PIPE)
 
     @commands.command()
     @has_permissions(administrator=True) # Checks if the user is an admin in that server
@@ -41,15 +46,20 @@ class Package:
             # Gets name of the repo and deletes the ".git"
             self.name_repo = self.name_repo[4].replace(".git", "")
             await ctx.send(f"Starting to install {self.name_repo}...")
+            print(f"\n[!] Starting to install {self.name_repo}...")
             # Goes into cogs directory then git clones the url
-            os.system(f"cd cogs && git clone {url}")
+            print(f"[*] Clonning {self.name_repo}")
+            if os.name == "nt":
+                self.cmd_run(f"cd cogs && git clone {url}")
+            else:
+                self.cmd_run(f"cd cogs;git clone {url}")
             await ctx.send("Cloned repository cog...")
             await ctx.send("Trying to find cog file and moving it...")
             # Goes into the cloned repo then moves the main cog file into cog/ directory
             if os.name == "nt":
-                os.system(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
+                self.cmd_run(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
             else:
-                os.system(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
+                self.cmd_run(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
             # Deletes the repo so it only takes the main cog file
             if os.name == "nt":            
@@ -66,6 +76,7 @@ class Package:
             self.bot.load_extension(f"cogs.{self.name_repo}")
             await ctx.send("Successfully installed cog!")
         except Exception as e:
+            print(f"[!] Failed to install {self.name_repo}! -> {e}")
             return await ctx.send(f"Error installing cog...please contact the developer for help! Details: ```{e}```")
     
     @commands.command()
@@ -98,7 +109,8 @@ class Package:
     @install.error
     async def install_error(self, error, ctx):
         if isinstance(error, MissingPermissions):
-            msg = "Sorry {}, you don't have admin privilages to install packages!".format(ctx.message.author) # Main message sented to user that executed command
+        # Main message sented to user that executed command
+            msg = "Sorry {}, you don't have admin privilages to install packages!".format(ctx.message.author)
             await ctx.send(msg)
     
     @uninstall.error
