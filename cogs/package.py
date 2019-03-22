@@ -55,12 +55,15 @@ class Package:
                 self.cmd_run(f"cd cogs;git clone {url}")
             await ctx.send("Cloned repository cog...")
             await ctx.send("Trying to find cog file and moving it...")
+            print("[*] Cloned repository cog...")
+            print("[*] Trying to find cog file and moving it...")
             # Goes into the cloned repo then moves the main cog file into cog/ directory
             if os.name == "nt":
                 self.cmd_run(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
             else:
                 self.cmd_run(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
+            print("[*] Cleaning up...")
             # Deletes the repo so it only takes the main cog file
             if os.name == "nt":            
                 # Finds current path and finds all files in cogs directory
@@ -72,8 +75,10 @@ class Package:
             else:
                 os.system(f"cd cogs;rm -r -rf {self.name_repo}")
             await ctx.send("Automatically loading cog...")
+            print("[*] Automatically loading cog...")
             # Auto reloads cog right after it's installed
             self.bot.load_extension(f"cogs.{self.name_repo}")
+            print("[!] Successfully installed cog!")
             await ctx.send("Successfully installed cog!")
         except Exception as e:
             print(f"[!] Failed to install {self.name_repo}! -> {e}")
