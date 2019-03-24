@@ -19,12 +19,12 @@ except ImportError:
 		sys.exit(0)
 	else:
 		print("[*] Invalid answer - it has to be 'y' or 'n' ~ Exiting...")
-		sys.exit(0)
+		sys.exit(1)
 # This portion is to check if it has the right version
 version = discord.__version__
 if version != "1.0.0a":
 	print("[!] You have the wrong discord.py version! It has to be 1.0.0a ~ Exiting...")
-	sys.exit(0)
+	sys.exit(1)
 
 from discord.ext import commands
 from discord import Member
@@ -51,10 +51,15 @@ colorama.init(convert=True, autoreset=True)
 
 # MAKE SURE TO MAKE YOUR OWN TOKEN.TXT 
 # Opens token.txt to extract TOKEN
-with open("token.txt") as f:
-	char0 = f.readlines()
-	TOKEN = char0[0].strip()
-	f.close()
+try:
+	with open("token.txt") as f:
+		char0 = f.readlines()
+		TOKEN = char0[0].strip()
+		f.close()
+except FileNotFoundError as e:
+	print("[!] You don't have a token file in the Bundle directory!")
+	print("[!] Exiting...")
+	sys.exit(1)
 
 # Checks if TOKEN is valid, if not, exits
 if TOKEN[0] != "N":
