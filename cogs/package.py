@@ -16,7 +16,7 @@ MAIN FILE TO INSTALL AND UNINSTALL COGS
 DO NOT DELETE!!!
 """
 
-class Package:
+class Package(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -26,7 +26,7 @@ class Package:
             "cogs.package",
             "cogs.error_handle"
         ]
-    
+
     def cmd_run(self, command):
         if " " in command:
             command = command.split(" ")
@@ -65,7 +65,7 @@ class Package:
             await ctx.send("Cleaning up...")
             print("[*] Cleaning up...")
             # Deletes the repo so it only takes the main cog file
-            if os.name == "nt":            
+            if os.name == "nt":
                 # Finds current path and finds all files in cogs directory
                 self.mypath = str(os.path.dirname(os.path.abspath(__file__))) + f"\{self.name_repo}"
                 self.cogpath = [f for f in listdir(self.mypath) if isfile(join(self.mypath, f))]
@@ -83,7 +83,7 @@ class Package:
         except Exception as e:
             print(f"[!] Failed to install {self.name_repo}! -> {e}")
             return await ctx.send(f"Error installing cog...please contact the developer for help! Details: ```{e}```")
-    
+
     @commands.command()
     @has_permissions(administrator=True)
     async def uninstall(self, ctx, cog:str=None):
@@ -109,7 +109,7 @@ class Package:
             await ctx.send(f"Successfully uninstalled {cog}")
         except Exception as e:
             return await ctx.send(f"Error uninstalling cog!```{e}```")
-    
+
     # These functions are executed if the user that attempted to use install command isn't a admin
     @install.error
     async def install_error(self, error, ctx):
@@ -117,7 +117,7 @@ class Package:
         # Main message sented to user that executed command
             msg = "Sorry {}, you don't have admin privilages to install packages!".format(ctx.message.author)
             await ctx.send(msg)
-    
+
     @uninstall.error
     async def uninstall_error(self, error, ctx):
         if isinstance(error, MissingPermissions):

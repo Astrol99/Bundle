@@ -9,7 +9,7 @@ DO NOT DELETE THIS FILE AS THIS IS THE MAIN FILE
 RELOAD, UNLOAD, LOAD PACKAGES
 """
 
-class Core:
+class Core(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -24,11 +24,11 @@ class Core:
         mypath = str(os.path.dirname(os.path.abspath(__file__)))
         cogpath = [f for f in listdir(mypath) if isfile(join(mypath, f))]
 
-        # Add them to cogs list 
+        # Add them to cogs list
         for file in cogpath:
             file = "cogs.{}".format(file).replace(".py", "")
             self.cogs.append(file)
-    
+
     # Command to list all cogs
     @commands.command()
     async def list_cogs(self, ctx):
@@ -58,6 +58,6 @@ class Core:
             await ctx.send("Successfully loaded extension!")
         except Exception as e:
             return await ctx.send(f"Failed to reload extension:\n```\n{e}\n```")
-        
+
 def setup(bot):
     bot.add_cog(Core(bot))
