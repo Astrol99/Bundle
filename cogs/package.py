@@ -52,7 +52,7 @@ class Package:
             if os.name == "nt":
                 self.cmd_run(f"cd cogs && git clone {url}")
             else:
-                self.cmd_run(f"cd cogs;git clone {url}")
+                self.cmd_run(f"cd cogs ; git clone {url}")
             await ctx.send("Cloned repository cog...")
             await ctx.send("Trying to find cog file and moving it...")
             print("[*] Cloned repository cog...")
@@ -61,7 +61,7 @@ class Package:
             if os.name == "nt":
                 self.cmd_run(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
             else:
-                self.cmd_run(f"cd cogs/{self.name_repo};mv {self.name_repo}.py ../")
+                self.cmd_run(f"cd cogs/{self.name_repo} ; mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
             print("[*] Cleaning up...")
             # Deletes the repo so it only takes the main cog file
@@ -73,7 +73,7 @@ class Package:
                     os.system(f"cd cogs/{self.name_repo} && del {item}")
                 os.system(f"cd cogs/ && rmdir /Q /S {self.name_repo}")
             else:
-                os.system(f"cd cogs;rm -r -rf {self.name_repo}")
+                os.system(f"cd cogs ; rm -r -rf {self.name_repo}")
             await ctx.send("Automatically loading cog...")
             print("[*] Automatically loading cog...")
             # Auto reloads cog right after it's installed
@@ -105,7 +105,7 @@ class Package:
             if os.name == "nt":
                 os.system(f"cd cogs && del {cog}.py")
             else:
-                os.system(f"cd cogs; rm {cog}.py")
+                os.system(f"cd cogs ; rm {cog}.py")
             await ctx.send(f"Successfully uninstalled {cog}")
         except Exception as e:
             return await ctx.send(f"Error uninstalling cog!```{e}```")
