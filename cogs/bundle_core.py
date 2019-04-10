@@ -9,7 +9,7 @@ DO NOT DELETE THIS FILE AS THIS IS THE MAIN FILE
 RELOAD, UNLOAD, LOAD PACKAGES
 """
 
-class Core(commands.Cog):
+class Core:
     def __init__(self, bot):
         self.bot = bot
 

@@ -16,7 +16,7 @@ MAIN FILE TO INSTALL AND UNINSTALL COGS
 DO NOT DELETE!!!
 """
 
-class Package(commands.Cog):
+class Package:
     def __init__(self, bot):
         self.bot = bot
 
@@ -52,7 +52,7 @@ class Package(commands.Cog):
             if os.name == "nt":
                 self.cmd_run(f"cd cogs && git clone {url}")
             else:
-                self.cmd_run(f"cd cogs ; git clone {url}")
+                self.cmd_run(f"cd cogs && git clone {url}")
             await ctx.send("Cloned repository cog...")
             await ctx.send("Trying to find cog file and moving it...")
             print("[*] Cloned repository cog...")
@@ -61,7 +61,7 @@ class Package(commands.Cog):
             if os.name == "nt":
                 self.cmd_run(f"cd cogs/{self.name_repo} && move {self.name_repo}.py ../")
             else:
-                self.cmd_run(f"cd cogs/{self.name_repo} ; mv {self.name_repo}.py ../")
+                self.cmd_run(f"cd cogs/{self.name_repo} && mv {self.name_repo}.py ../")
             await ctx.send("Cleaning up...")
             print("[*] Cleaning up...")
             # Deletes the repo so it only takes the main cog file
@@ -73,7 +73,7 @@ class Package(commands.Cog):
                     os.system(f"cd cogs/{self.name_repo} && del {item}")
                 os.system(f"cd cogs/ && rmdir /Q /S {self.name_repo}")
             else:
-                os.system(f"cd cogs ; rm -r -rf {self.name_repo}")
+                os.system(f"cd cogs && rm -r -rf {self.name_repo}")
             await ctx.send("Automatically loading cog...")
             print("[*] Automatically loading cog...")
             # Auto reloads cog right after it's installed
@@ -95,7 +95,6 @@ class Package(commands.Cog):
         elif cog in self.important_cogs:
             return await ctx.send("Unable to delete main files!")
         try:
-            # Why does line 57 exist? Just to keep consistancy with "cogs." to not confuse end-user
             cog = cog.replace("cogs.", "").replace(" ", "")
             # Unloads extension so it doesn't interfere with live bot
             await ctx.send("Unloading extension first...")
